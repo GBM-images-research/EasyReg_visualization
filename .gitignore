@@ -172,4 +172,8 @@ pruebas.ipynb
 mri/
 segmentations/
 
+# Compress
+*.zip
+*.7z
+
 

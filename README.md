@@ -1,5 +1,19 @@
 # Visualizar mapas y segmentaciones registradas con EasyReg
 
+## Clonar repositorio
+```
+git clone https://github.com/GBM-images-research/EasyReg_visualization
+```
+
+## Descargar dataset
+Descargar las carpetas y colocarlas en el directorio del proyecto 
+
+Segmentations folder:
+https://drive.google.com/file/d/1U6k-UhWhNUHbgWy7lojCkA-mtUu83G5h/view?usp=sharing
+
+MRI folder:
+https://drive.google.com/file/d/1b0UXBedf50A2jcCWIz805-_eSQyICwKU/view?usp=sharing
+
 ## Instalar dependecias
 ```
 pip install -r requirements.txt
