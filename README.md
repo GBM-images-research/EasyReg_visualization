@@ -30,12 +30,12 @@ Sin registrar:
 python visualizar_easy.py --serie 24 --o
 
 ```
-Registrar imagen base en función de la imagen de seguimiento (backward)
+Ver registro de imagen base en función de la imagen de seguimiento (backward)
 ```
 python visualizar_easy.py --serie 24 --b
 
 ```
-Registrar imagen de seguimiento en función de la imagen base (forward)
+Ver registro de imagen de seguimiento en función de la imagen base (forward)
 ```
 python visualizar_easy.py --serie 24 
 
