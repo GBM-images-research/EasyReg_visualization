@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ejecutar mri_synthseg para el primer archivo T2
-#mri_synthseg --i UPENN-GBM-00352_11_T1.nii.gz --o . --parc
+mri_synthseg --i UPENN-GBM-00352_11_T1.nii.gz --o . --parc
 
 # Ejecutar mri_synthseg para el segundo archivo T2
 #mri_synthseg --i UPENN-GBM-00352_21_T1.nii.gz --o . --parc

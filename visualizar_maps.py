@@ -49,7 +49,22 @@ series = {
 def imprimir_inferencia(serie=0, original=True):
     global slice_num
 
-    if original:
+    if not original:
+        # T1GD follow original
+        path_recurrence = f"./mri/UPENN-GBM-{series[serie]}_21_T1GD_flo_reg.nii.gz"
+        # T1GD base original
+        path_base = f"./mri/UPENN-GBM-{series[serie]}_11_T1GD.nii.gz"
+        # Segmentation file original
+        path_segmentation_nroi = f"./segmentations/{serie}nroi_prob.nii.gz"
+        path_segmentation_froi = f"./segmentations/{serie}froi_prob.nii.gz"
+        img_add = path_base
+        img_rec = path_recurrence
+        label_add = path_segmentation_nroi
+        label_add2 = path_segmentation_froi
+        print("Image follow deformada: ", path_recurrence)
+        print("Image base original: ", path_base)
+        print(" Segementation:", label_add)
+    else:
         # T1GD follow original
         path_recurrence = f"./mri/UPENN-GBM-{series[serie]}_21_T1GD.nii.gz"
         # T1GD base original
@@ -117,7 +132,7 @@ def imprimir_inferencia(serie=0, original=True):
         # ax[1, 0].set_title("Map nroi")
 
         ax[1, 1].clear()
-        ax[1, 1].imshow(np.rot90(img[:, :, slice_num], k=-1), cmap="gray")
+        ax[1, 1].imshow(np.rot90(img_rec[:, :, slice_num], k=-1), cmap="gray")
         ax[1, 1].imshow(np.rot90(seg_out[:, :, slice_num], k=-1), cmap="jet", alpha=0.3)
         ax[1, 1].set_title("nroi map")
 
@@ -155,7 +170,7 @@ def main():
     parser.add_argument("--serie", type=int, default=0, help="Número de serie")
     parser.add_argument(
         "--o",
-        default=True,
+        default=False,
         action="store_true",
         help="Colocar si queremos ver sin deformaciones",
     )

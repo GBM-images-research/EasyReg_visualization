@@ -135,7 +135,7 @@ def imprimir_inferencia(serie=0, backward=False, original=False):
         ax[0, 1].clear()
         ax[0, 1].imshow(np.rot90(img[:, :, slice_num], k=-1), cmap="gray")
         ax[0, 1].imshow(np.rot90(seg_out[:, :, slice_num], k=-1), cmap="jet", alpha=0.3)
-        ax[0, 1].set_title("nroi - froi - inter.")
+        ax[0, 1].set_title("nroi + froi image base")
 
         # ax[1, 0].clear()
         # ax[1, 0].imshow(np.rot90(seg[0][:, :, slice_num], k=-1))
@@ -144,7 +144,7 @@ def imprimir_inferencia(serie=0, backward=False, original=False):
         ax[1, 1].clear()
         ax[1, 1].imshow(np.rot90(img_rec[:, :, slice_num], k=-1), cmap="gray")
         ax[1, 1].imshow(np.rot90(seg_out[:, :, slice_num], k=-1), cmap="jet", alpha=0.3)
-        ax[1, 1].set_title("Recurrence Map nroi")
+        ax[1, 1].set_title("nroi + froi image follow")
 
         ax[1, 0].clear()
         ax[1, 0].imshow(np.rot90(img_rec[:, :, slice_num], k=-1), cmap="gray")

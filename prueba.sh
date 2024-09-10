@@ -1,9 +1,9 @@
 #!/bin/bash
 # Leer el archivo de configuración
-CASO=00355
+CASO=000353
 SERIE=T1
 SERIE2=T1GD
-N=35
+N=33
 
 # Construir los nombres de los archivos basados en las variables del archivo de configuración
 ARCHIVO1="mri/UPENN-GBM-${CASO}_11_${SERIE}.nii.gz"
@@ -33,7 +33,7 @@ SEGMENTATION_REG="segmentations/${N}segmentation_ref_reg.nii.gz"
 # echo $ARCHIVO2
 #mri_synthseg --i "$ARCHIVO2" --o ./mri --parc
 
-# # Ejecutar mri_easyreg con los archivos T1 y los resultados de mri_synthseg
+# Ejecutar mri_easyreg con los archivos T1 y los resultados de mri_synthseg
 # mri_easyreg --ref "$ARCHIVO1" --flo "$ARCHIVO2" \
 #             --ref_seg "$ARCHIVO_SYNTHSEG1" --flo_seg "$ARCHIVO_SYNTHSEG2" \
 #             --ref_reg "$ARCHIVO_REG1" --flo_reg "$ARCHIVO_REG2" \

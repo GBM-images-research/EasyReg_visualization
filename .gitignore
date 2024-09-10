@@ -171,6 +171,8 @@ inferences/
 pruebas.ipynb
 mri/
 segmentations/
+segmentations_sin_scale/
+deformation_field/
 
 # Compress
 *.zip
