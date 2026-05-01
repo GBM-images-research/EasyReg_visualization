@@ -1,16 +1,53 @@
 #!/bin/bash
+# Declarar un diccionario para asociar N con CASO
+declare -A casos_dict=(
+    [12]="00133"
+)
 
-# Ejecutar mri_synthseg para el primer archivo T2
-mri_synthseg --i UPENN-GBM-00352_11_T1.nii.gz --o . --parc
+SERIE=T1
+SERIE2=T1GD
 
-# Ejecutar mri_synthseg para el segundo archivo T2
-#mri_synthseg --i UPENN-GBM-00352_21_T1.nii.gz --o . --parc
+# Iterar sobre el diccionario
+for N in "${!casos_dict[@]}"; do
+    CASO="${casos_dict[$N]}"
 
-# Ejecutar mri_easyreg con los archivos T1 y los resultados de mri_synthseg
-mri_easyreg --ref UPENN-GBM-00042_11_T1.nii.gz --flo UPENN-GBM-00042_21_T1.nii.gz \
-            --ref_seg UPENN-GBM-00042_11_T1_synthseg.nii.gz --flo_seg UPENN-GBM-00042_21_T1_synthseg.nii.gz \
-            --ref_reg UPENN-GBM-00042_11_T1_ref_reg.nii.gz --flo_reg UPENN-GBM-00042_21_T1_flo_reg.nii.gz \
-            --fwd_field fwd_field_00042_T1.nii.gz --bak_field bak_field_00042_T1.nii.gz
+    # Construir los nombres de los archivos basados en las variables del archivo de configuración
+    ARCHIVO1="mri/UPENN-GBM-${CASO}_11_${SERIE}.nii.gz"
+    ARCHIVO2="mri/UPENN-GBM-${CASO}_21_${SERIE}.nii.gz"
+    ARCHIVOGD1="mri/UPENN-GBM-${CASO}_11_${SERIE2}.nii.gz"
+    ARCHIVOGD2="mri/UPENN-GBM-${CASO}_21_${SERIE2}.nii.gz"
 
-# MRI
-mri_easywarp --i UPENN-GBM-00042_11_T1GD.nii.gz --o UPENN-GBM-00042_11_T1GD_ref_reg.nii.gz --field bak_field_00042_T1.nii.gz
+    ARCHIVO_SYNTHSEG1="mri/UPENN-GBM-${CASO}_11_${SERIE}_synthseg.nii.gz"
+    ARCHIVO_SYNTHSEG2="mri/UPENN-GBM-${CASO}_21_${SERIE}_synthseg.nii.gz"
+
+    ARCHIVO_REG1="mri/UPENN-GBM-${CASO}_11_${SERIE}_ref_reg.nii.gz"
+    ARCHIVO_REG2="mri/UPENN-GBM-${CASO}_21_${SERIE}_flo_reg.nii.gz"
+    ARCHIVOGD_REG1="mri/UPENN-GBM-${CASO}_11_${SERIE2}_ref_reg.nii.gz"
+    ARCHIVOGD_REG2="mri/UPENN-GBM-${CASO}_21_${SERIE2}_flo_reg.nii.gz"
+
+    FWDFIELD="deformation_field/fwd_field_${CASO}_T1.nii.gz"
+    BAKFIELD="deformation_field/bak_field_${CASO}_T1.nii.gz"
+
+    SEGMENTATION="recurrence_seg/${N}segmentation.nii.gz"
+    SEGMENTATION_REG="recurrence_seg/${N}segmentation_flo_reg.nii.gz"
+
+    # # Ejecutar mri_synthseg para el primer archivo T1
+    # echo "Procesando caso $CASO con N=$N: $ARCHIVO1"
+    # mri_synthseg --i "$ARCHIVO1" --o ./mri --parc
+
+    # # Ejecutar mri_synthseg para el segundo archivo T1
+    # echo "Procesando caso $CASO con N=$N: $ARCHIVO2"
+    # mri_synthseg --i "$ARCHIVO2" --o ./mri --parc
+
+    echo "Procesando caso $CASO con N=$N"
+    # Ejecutar mri_easyreg con los archivos T1 y los resultados de mri_synthseg
+    # mri_easyreg --ref "$ARCHIVO1" --flo "$ARCHIVO2" \
+    #             --ref_seg "$ARCHIVO_SYNTHSEG1" --flo_seg "$ARCHIVO_SYNTHSEG2" \
+    #             --ref_reg "$ARCHIVO_REG1" --flo_reg "$ARCHIVO_REG2" \
+    #             --fwd_field "$FWDFIELD" --bak_field "$BAKFIELD"
+
+    # Aplicar mri_easywarp con los campos calculados
+    # mri_easywarp --i "$ARCHIVOGD1" --o "$ARCHIVOGD_REG1" --field "$BAKFIELD"
+    mri_easywarp --i "$SEGMENTATION" --o "$SEGMENTATION_REG" --field "$FWDFIELD" --nearest
+    # mri_easywarp --i "$ARCHIVOGD2" --o "$ARCHIVOGD_REG2" --field "$FWDFIELD"
+done

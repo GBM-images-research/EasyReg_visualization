@@ -173,6 +173,9 @@ mri/
 segmentations/
 segmentations_sin_scale/
 deformation_field/
+labels/
+segmentaciones_manuales/
+recurrence_seg/
 
 # Compress
 *.zip
